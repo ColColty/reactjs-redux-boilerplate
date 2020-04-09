@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-Axios.create({
+export default Axios.create({
     baseURL: "https://"
 });
 
