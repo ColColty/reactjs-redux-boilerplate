@@ -1,18 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const PrependInput = (props) => {
+    return (
+        <div className="input-group">
+        {
+            props.prepend &&
+            <div className="input-group-prepend">
+                <div className="input-group-text">{props.prepend}</div>
+            </div>
+        }
+        {props.input}
+        </div>
+    );
+}
+
 const Input = props => {
     const parentClassNames = [
-        "form-group",
+        "py-1",
         props.parentClassNames
     ].filter(el => el).join(" ");
     const classNames = [
         "form-control" + (props.plainText ? "-plaintext" : ""),
-        "w-100",
         props.error && "is-invalid",
         props.disabled && "disabled",
         props.classNames
     ].filter(el => el).join(" ");
+    const [showLabel, setShowLabel] = React.useState(true);
     const inputId = props.id || Math.random().toString(36).slice(-8);
 
     const handleChange = (e) => {
@@ -20,29 +34,48 @@ const Input = props => {
             props.onChange(e.target.value);
     }
 
+    React.useEffect(() => {
+        if (props.value !== "" && props.labelDisplay === "onType") {
+            setShowLabel(true);
+        } else if (props.labelDisplay === "onType") {
+            setShowLabel(false);
+        }
+    }, [props.value, props.labelDisplay]);
+
     return (
         <div className={parentClassNames}>
             {
-                props.label &&
+                props.label && showLabel &&
                 <label for={inputId}>{props.label}</label>
             }
             {
-                props.prepend &&
-                <div className="input-group-prepend">
-                    <div className="input-group-text">{props.prepend}</div>
-                </div>
+                props.prepend ?
+                <PrependInput {...props} input={
+                    <input
+                        id={inputId}
+                        type={props.type || "text"}
+                        className={classNames}
+                        onChange={handleChange}
+                        value={props.value || ""}
+                        placeholder={props.placeholder || ""}
+                        readOnly={props.plainText}
+                        disabled={props.disabled}
+                        required={props.required}
+                    />
+                } />
+                :
+                <input
+                    id={inputId}
+                    type={props.type || "text"}
+                    className={classNames}
+                    onChange={handleChange}
+                    value={props.value || ""}
+                    placeholder={props.placeholder || ""}
+                    readOnly={props.plainText}
+                    disabled={props.disabled}
+                    required={props.required}
+                />
             }
-            <input
-                id={inputId}
-                type={props.type || "text"}
-                className={classNames}
-                onChange={handleChange}
-                value={props.value || ""}
-                placeholder={props.placeholder || ""}
-                readOnly={props.plainText}
-                disabled={props.disabled}
-                required={props.required}
-            />
             {
                 props.helper &&
                 <small>{props.helper}</small>
