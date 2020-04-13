@@ -42,6 +42,20 @@ const Input = props => {
         }
     }, [props.value, props.labelDisplay]);
 
+    const InputField = (props) => (
+        <input
+            id={inputId}
+            type={props.type || "text"}
+            className={classNames}
+            onChange={handleChange}
+            value={props.value || ""}
+            placeholder={props.placeholder || ""}
+            readOnly={props.plainText}
+            disabled={props.disabled}
+            required={props.required}
+        />
+    )
+
     return (
         <div className={parentClassNames}>
             {
@@ -51,30 +65,10 @@ const Input = props => {
             {
                 props.prepend ?
                 <PrependInput {...props} input={
-                    <input
-                        id={inputId}
-                        type={props.type || "text"}
-                        className={classNames}
-                        onChange={handleChange}
-                        value={props.value || ""}
-                        placeholder={props.placeholder || ""}
-                        readOnly={props.plainText}
-                        disabled={props.disabled}
-                        required={props.required}
-                    />
+                    <InputField {...props} />
                 } />
                 :
-                <input
-                    id={inputId}
-                    type={props.type || "text"}
-                    className={classNames}
-                    onChange={handleChange}
-                    value={props.value || ""}
-                    placeholder={props.placeholder || ""}
-                    readOnly={props.plainText}
-                    disabled={props.disabled}
-                    required={props.required}
-                />
+                <InputField {...props} />
             }
             {
                 props.helper &&
