@@ -1,0 +1,6 @@
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+.text-primary-darker {
+    color: darken($primary, 25%);
+}
