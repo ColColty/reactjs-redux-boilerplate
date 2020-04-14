@@ -13,6 +13,8 @@ const Button = props => {
     const buttonId = props.id || Math.random().toString(36).slice(-8);
 
     const handleClick = (e) => {
+        if (props.type === "submit")
+            return;
         e.preventDefault();
         if (props.onClick)
             props.onClick();

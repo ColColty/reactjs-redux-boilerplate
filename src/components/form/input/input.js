@@ -17,6 +17,7 @@ const PrependInput = (props) => {
 
 const Input = props => {
     const parentClassNames = [
+        "form-group",
         "py-1",
         props.parentClassNames
     ].filter(el => el).join(" ");

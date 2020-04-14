@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
+
 import { addToken } from 'actions/app-data';
 
 const Loader = () => {
