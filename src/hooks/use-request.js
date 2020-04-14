@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 import api from 'utils/api';
 
-const useRequest = (requestType, url, body = {}, headers = {}, otherRequest = false) => {
+const useRequest = (requestType, url, body = {}, headers = {}, cb, otherRequest = false) => {
     const [returnData, setReturnData] = React.useState({
         status: "Loading",
         data: {}
@@ -41,7 +41,7 @@ const useRequest = (requestType, url, body = {}, headers = {}, otherRequest = fa
         update: putType
     };
 
-    const handleRequestType = React.useCallback((requestType, url, body = {}, headers = {}, otherRequest = false) => {
+    const handleRequestType = React.useCallback((requestType, url, body = {}, headers = {}, cb, otherRequest = false,) => {
         setReturnData(state => ({status: "Loading", ...state}));
         functionTypes[requestType](url, body, headers, otherRequest)
         .then(res => {
@@ -50,6 +50,7 @@ const useRequest = (requestType, url, body = {}, headers = {}, otherRequest = fa
                 data: res,
                 ...state
             }));
+            cb(res);
         })
         .catch(err => {
             setReturnData(state => ({
@@ -57,12 +58,13 @@ const useRequest = (requestType, url, body = {}, headers = {}, otherRequest = fa
                 data: err,
                 ...state
             }));
+            cb(err);
         });
     }, [functionTypes]);
 
     React.useEffect(() => {
         if (requestType && url)
-            handleRequestType(requestType, url, body, headers, otherRequest);
+            handleRequestType(requestType, url, body, headers, cb, otherRequest);
     }, [requestType, url, body, headers, otherRequest, handleRequestType]);
 
     return [returnData.status, returnData.data, handleRequestType];
