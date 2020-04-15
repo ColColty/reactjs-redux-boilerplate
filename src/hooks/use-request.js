@@ -47,10 +47,10 @@ const useRequest = (requestType, url, body = {}, headers = {}, cb, otherRequest 
         .then(res => {
             setReturnData(state => ({
                 status: "Done",
-                data: res,
+                data: res.data,
                 ...state
             }));
-            cb(res);
+            cb(res.data);
         })
         .catch(err => {
             setReturnData(state => ({
@@ -65,7 +65,7 @@ const useRequest = (requestType, url, body = {}, headers = {}, cb, otherRequest 
     React.useEffect(() => {
         if (requestType && url)
             handleRequestType(requestType, url, body, headers, cb, otherRequest);
-    }, [requestType, url, body, headers, otherRequest, handleRequestType]);
+    }, [requestType, url, body, headers, otherRequest, handleRequestType, cb]);
 
     return [returnData.status, returnData.data, handleRequestType];
 };
