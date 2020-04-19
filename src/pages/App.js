@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Graphical part
+
 function App() {
   return (
     <div className="App">

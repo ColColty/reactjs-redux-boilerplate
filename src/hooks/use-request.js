@@ -38,28 +38,33 @@ const useRequest = (requestType, url, body = {}, headers = {}, cb, otherRequest 
         get: getType,
         post: postType,
         delete: deleteType,
-        update: putType
+        put: putType
     };
 
     const handleRequestType = React.useCallback((requestType, url, body = {}, headers = {}, cb, otherRequest = false,) => {
-        setReturnData(state => ({status: "Loading", ...state}));
+        setReturnData({status: "Loading", data: {}, ...requestType});
         functionTypes[requestType](url, body, headers, otherRequest)
         .then(res => {
-            setReturnData(state => ({
+            setReturnData({
+                ...returnData,
                 status: "Done",
                 data: res.data,
-                ...state
-            }));
-            cb(res.data);
+            });
+            if (cb) {
+                cb(res.data, "Done");
+            }
         })
         .catch(err => {
-            setReturnData(state => ({
+            setReturnData({
+                ...returnData,
                 status: "Error",
                 data: err,
-                ...state
-            }));
-            cb(err);
+            });
+            if (cb) {
+                cb(err, "Error");
+            }
         });
+        // eslint-disable-next-line
     }, [functionTypes]);
 
     React.useEffect(() => {
@@ -67,7 +72,7 @@ const useRequest = (requestType, url, body = {}, headers = {}, cb, otherRequest 
             handleRequestType(requestType, url, body, headers, cb, otherRequest);
     }, [requestType, url, body, headers, otherRequest, handleRequestType, cb]);
 
-    return [returnData.status, returnData.data, handleRequestType];
+    return [handleRequestType, returnData.status, returnData.data];
 };
 
 export default useRequest;
