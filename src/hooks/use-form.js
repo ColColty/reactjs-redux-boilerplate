@@ -62,7 +62,23 @@ const useForm = (baseForm = {}) => {
             setErrors({...errors, [name]: false});
     }
 
-    return [form, errors, handleForm, handleSubmit, toSendFormat];
+    const fillForm = (newForm) => {
+        if (!newForm)
+            return;
+        let regenForm = form;
+        Object.keys(newForm).forEach(el => {
+            if (regenForm[el]) {
+                regenForm[el].value = newForm[el];
+            } else {
+                regenForm[el] = {
+                    value: newForm[el]
+                };
+            }
+        })
+        setForm(regenForm);
+    }
+
+    return [form, errors, handleForm, handleSubmit, toSendFormat, fillForm];
 };
 
 export default useForm;

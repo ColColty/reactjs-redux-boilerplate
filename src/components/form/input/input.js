@@ -15,6 +15,21 @@ const PrependInput = (props) => {
     );
 }
 
+
+const InputField = (props) => (
+    <input
+        id={props.inputId}
+        type={props.type || "text"}
+        className={props.classNames}
+        onChange={props.handleChange}
+        value={props.value || ""}
+        placeholder={props.placeholder || ""}
+        readOnly={props.plainText}
+        disabled={props.disabled}
+        required={props.required}
+    />
+)
+
 const Input = props => {
     const parentClassNames = [
         "form-group",
@@ -43,19 +58,6 @@ const Input = props => {
         }
     }, [props.value, props.labelDisplay]);
 
-    const InputField = (props) => (
-        <input
-            id={inputId}
-            type={props.type || "text"}
-            className={classNames}
-            onChange={handleChange}
-            value={props.value || ""}
-            placeholder={props.placeholder || ""}
-            readOnly={props.plainText}
-            disabled={props.disabled}
-            required={props.required}
-        />
-    )
 
     return (
         <div className={parentClassNames}>
@@ -66,10 +68,10 @@ const Input = props => {
             {
                 props.prepend ?
                 <PrependInput {...props} input={
-                    <InputField {...props} />
+                    <InputField {...props} inputId={inputId} classNames={classNames} handleChange={handleChange} />
                 } />
                 :
-                <InputField {...props} />
+                <InputField {...props} inputId={inputId} classNames={classNames} handleChange={handleChange} />
             }
             {
                 props.helper &&
