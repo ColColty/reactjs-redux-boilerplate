@@ -1,14 +1,4 @@
 import React from 'react';
-import { Input } from 'components/form/input';
-import { TextArea } from 'components/form/text-area';
-import { Selector } from 'components/form/selector';
-import { Dropdown } from 'components/form/dropdown';
-import { Select, CreatableSelect } from 'components/form/select';
-import { SearchBar } from 'components/form/searchbar';
-import { Link } from 'components/form/link';
-import { FileBrowser } from 'components/form/file-browser';
-import { Checkbox, Form } from 'semantic-ui-react';
-import { Button } from 'components/form/button';
 
 // Graphical part
 
@@ -28,7 +18,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <Form />
     </div>
   );
 }
