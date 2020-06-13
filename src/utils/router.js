@@ -14,7 +14,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <ServiceWorkerWrapper />
+            {/* <ServiceWorkerWrapper /> */}
             <Switch>
                 <Route path="/" component={App} exact />
             </Switch>
