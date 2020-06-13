@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { v4 as uuidv4 } from 'uuid';
+import { REQUIRED_IDENTIFIER } from 'utils/texts';
+
 const PrependInput = (props) => {
     return (
         <div className="input-group">
@@ -23,27 +26,30 @@ const InputField = (props) => (
         className={props.classNames}
         onChange={props.handleChange}
         value={props.value || ""}
-        placeholder={props.placeholder || ""}
+        placeholder={props.placeholder + (props.required ? REQUIRED_IDENTIFIER : "") || ""}
         readOnly={props.plainText}
         disabled={props.disabled}
         required={props.required}
+        style={props.style}
+        onBlur={props.onBlur}
     />
 )
 
 const Input = props => {
     const parentClassNames = [
         "form-group",
-        "py-1",
-        props.parentClassNames
+        props.parentClassNames,
+        props.extended && "w-100"
     ].filter(el => el).join(" ");
     const classNames = [
         "form-control" + (props.plainText ? "-plaintext" : ""),
         props.error && "is-invalid",
-        props.disabled && "disabled",
-        props.classNames
+        props.disabled && "disabled border",
+        props.classNames,
+        props.extended && "w-100"
     ].filter(el => el).join(" ");
     const [showLabel, setShowLabel] = React.useState(true);
-    const inputId = props.id || Math.random().toString(36).slice(-8);
+    const inputId = props.id || uuidv4();
 
     const handleChange = (e) => {
         if (props.onChange)
@@ -63,7 +69,7 @@ const Input = props => {
         <div className={parentClassNames}>
             {
                 props.label && showLabel &&
-                <label for={inputId}>{props.label}</label>
+                <label forhtml={inputId}>{props.label + (props.required ? REQUIRED_IDENTIFIER : "")}</label>
             }
             {
                 props.prepend ?
@@ -103,7 +109,9 @@ Input.propTypes = {
     parentClassNames: PropTypes.string,
     errorMessage: PropTypes.string,
     required: PropTypes.bool,
-    id: PropTypes.string
+    id: PropTypes.string,
+    style: PropTypes.object,
+    onBlur: PropTypes.func,
 };
 
 export default Input;

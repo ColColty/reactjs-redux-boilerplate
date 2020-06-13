@@ -20,7 +20,7 @@ const useForm = (baseForm = {}) => {
         })
         setErrors(newErrors);
         for (var i in newErrors) {
-            if (form[i]?.isRequired && newErrors[i])
+            if (newErrors[i])
                 return false;
         }
         return true;
@@ -30,33 +30,33 @@ const useForm = (baseForm = {}) => {
         let data = {};
 
         Object.keys(form).forEach(el => {
-            data[el] = form[el].value;
+            if (Array.isArray(form[el].value)) {
+                data[el] = JSON.stringify(form[el].value);
+            } else {
+                data[el] = form[el].value;
+            }
         });
         return data;
     }
 
-    const handleForm = (name, value) => {
+    const handleForm = (name, value, error = false) => {
+        if (error) {
+            setErrors(state => ({...state, [name]: value}));
+            return;
+        }
         if (name === "reset") {
             setForm(baseForm);
             return;
         }
-        if (form[name]?.errorHandle) {
-            if (form[name]?.errorHandle(value)) {
-                setForm({...form, [name]: {
-                        ...form[name],
-                        value: value
-                    }
-                });
-            } else {
-                setErrors({...errors, [name]: true});
-                return;
-            }
+        if (form[name]?.errorHandle && form[name]?.errorHandle(value)) {
+            setErrors({...errors, [name]: true});
+            return;
         } else {
-            setForm({...form, [name]: {
-                    ...form[name],
+            setForm(state => ({...state, [name]: {
+                    ...state[name],
                     value: value
                 }
-            });
+            }));
         }
         if (errors[name])
             setErrors({...errors, [name]: false});

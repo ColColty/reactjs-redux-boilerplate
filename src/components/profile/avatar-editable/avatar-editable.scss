@@ -1,0 +1,25 @@
+.editable {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+
+    &:hover {
+        opacity: 1;
+        .button-edit {
+            opacity: 1;
+        }
+    }
+
+    .button-edit {
+        position: absolute;
+        top: calc(50% - 15px);
+        left: calc(50% - 15px);
+        opacity: 0;
+    }
+}

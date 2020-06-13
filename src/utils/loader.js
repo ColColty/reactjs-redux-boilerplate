@@ -13,6 +13,7 @@ const Loader = () => {
             console.log(localStorage.getItem("Authorization"))
             dispatch(addToken(localStorage.getItem("Authorization")));
         }
+        // eslint-disable-next-line
     }, [])
     return (<></>)
 };

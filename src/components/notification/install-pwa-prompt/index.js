@@ -1,0 +1,1 @@
+export { default as InstallPWAPrompt } from './install-pwa-prompt';

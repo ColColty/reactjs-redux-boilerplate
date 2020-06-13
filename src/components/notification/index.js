@@ -1,0 +1,1 @@
+export { default as NotificationConfirmation } from './notification-confirmation';

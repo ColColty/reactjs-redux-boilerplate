@@ -1,0 +1,1 @@
+export const NEED_TO_ADD_A_FILE = "Vous devez ajouter un fichier";

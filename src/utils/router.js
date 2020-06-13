@@ -1,7 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import App from '../pages/App';
+
 import { useDispatch } from 'react-redux';
+
+import App from '../pages/App';
+import ServiceWorkerWrapper from './service-worker-wrapper';
+
 import { addToken } from 'actions/app-data';
 
 const Router = () => {
@@ -10,6 +14,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
+            <ServiceWorkerWrapper />
             <Switch>
                 <Route path="/" component={App} exact />
             </Switch>

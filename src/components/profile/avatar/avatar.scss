@@ -6,7 +6,7 @@
     display: inline-block;
     width: $size;
     height: $size;
-    border-radius: 4rem;
+    border-radius: 50%;
     border: none !important;
 
     &.avatar-border {
@@ -38,4 +38,15 @@
 
 .avatar-lg {
     @include Avatar(8rem, 4rem);
+}
+
+.avatar-xl {
+    @include Avatar(10rem, 6rem);
+}
+
+.avatar-auth {
+    @include Avatar(16rem, 10rem);
+    @media screen and (max-width: 576px) {
+        @include Avatar(8rem, 4rem);
+    }
 }
